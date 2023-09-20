@@ -2,7 +2,6 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
@@ -11,10 +10,18 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link rel="stylesheet" href="./src/style/style.scss" />
     <title>WordleGame - YoonJunsu</title>
+    <script type="module" src="/src/script/main.ts"></script>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <article>
+      <input class="input" type="text" maxlength="1" />
+      <input class="input" type="text" maxlength="1" />
+      <input class="input" type="text" maxlength="1" />
+      <input class="input" type="text" maxlength="1" />
+      <input class="input" type="text" maxlength="1" />
+      <button id="submit-btn">제출</button>
+    </article>
   </body>
 </html>
