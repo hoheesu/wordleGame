@@ -17,13 +17,27 @@ submitBtn?.addEventListener("click", () => {
   }
 });
 
-input.forEach((e, i) => {
-  e.addEventListener("input", () => {
-    if (i < input.length - 1) {
-      if (
-        input[i].value.length === Number(input[i].getAttribute("maxlength"))
-      ) {
-        input[i + 1].focus();
+// input.input KeyUp event
+input.forEach((x, i) => {
+  x.addEventListener("keyup", (e) => {
+    if (e.code === "Backspace") {
+      if (i <= input.length - 1) {
+        if (i === input.length - 2) {
+          input[i - 1].focus();
+        } else {
+          if (input[i].value.length === 0) {
+            input[i - 1].value = "";
+            input[i - 1].focus();
+          }
+        }
+      }
+    } else if ("KeyA" <= e.code && e.code <= "KeyZ") {
+      if (i < input.length - 1) {
+        if (
+          input[i].value.length === Number(input[i].getAttribute("maxlength"))
+        ) {
+          input[i + 1].focus();
+        }
       }
     }
   });
