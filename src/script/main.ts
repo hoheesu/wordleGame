@@ -1,44 +1,42 @@
 let answer = "abcde" as string;
-let submitBtn = document.getElementById("submit-btn");
-let input = document.querySelectorAll(".input") as NodeListOf<HTMLInputElement>;
-
-submitBtn?.addEventListener("click", () => {
-  // 1. 위치 맞음면 녹색
-  // 2. 위치 틀리면 노랑색
-  // 3. 글자 없으면 회색
-  for (const inputIndex in input) {
-    if (input[inputIndex].value === answer[inputIndex]) {
-      input[inputIndex].style.backgroundColor = "green";
-    } else if (answer.includes(input[inputIndex].value)) {
-      input[inputIndex].style.backgroundColor = "yellow";
-    } else {
-      input[inputIndex].style.backgroundColor = "lightgrey";
+let boxCount = 1;
+document.addEventListener("keydown", (e) => {
+  let box = document.querySelector(`.box-${boxCount}`) as HTMLElement;
+  let lastBox = document.querySelector(".box-5") as HTMLElement;
+  if (e.code >= "KeyA" && e.code <= "KeyZ") {
+    if (box.textContent === "") {
+      box.textContent = `${e.code[3]}`;
+      box.style.border = "2px solid #f00";
+      if (boxCount < 5) boxCount++;
+      console.log("boxCount: ", boxCount);
     }
+  } else if (e.code === "Backspace") {
+    if (box.innerHTML === "") {
+      if (boxCount > 1) {
+        boxCount--;
+        box = document.querySelector(`.box-${boxCount}`) as HTMLElement;
+      }
+    }
+    box.innerHTML = "";
+    box.style.border = "2px solid #333";
+    console.log("boxCount: ", boxCount);
+  } else if (e.code === "Enter") {
+    boxCount < 5 || lastBox.textContent === ""
+      ? alert("5글자를입력하세요")
+      : checkAnswer();
   }
 });
 
-// input.input KeyUp event
-input.forEach((x, i) => {
-  x.addEventListener("keyup", (e) => {
-    if (e.code === "Backspace") {
-      if (i <= input.length - 1) {
-        if (i === input.length - 2) {
-          input[i - 1].focus();
-        } else {
-          if (input[i].value.length === 0) {
-            input[i - 1].value = "";
-            input[i - 1].focus();
-          }
-        }
-      }
-    } else if ("KeyA" <= e.code && e.code <= "KeyZ") {
-      if (i < input.length - 1) {
-        if (
-          input[i].value.length === Number(input[i].getAttribute("maxlength"))
-        ) {
-          input[i + 1].focus();
-        }
-      }
+function checkAnswer() {
+  let boxes = document.querySelectorAll(".box") as NodeListOf<HTMLInputElement>;
+  let boxWords = "";
+  boxes.forEach((el) => {
+    boxWords += el.innerText;
+  });
+  boxWords.split("").forEach((word, index) => {
+    let box = document.querySelector(`.box-${index}`) as HTMLElement;
+    if (word === answer[index]) {
+      box.style.backgroundColor = "green";
     }
   });
-});
+}
