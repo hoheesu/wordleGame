@@ -1,3 +1,5 @@
+import alert from "./alert";
+
 let answer = "truck".toUpperCase() as string;
 let boxCount = 1;
 let containerCount = 1;
@@ -17,7 +19,10 @@ document.addEventListener("keydown", (e) => {
     //A-Z 키보드 누르는 경우
     if (box.textContent === "") {
       box.textContent = `${e.code[3]}`;
-      box.style.backgroundColor = "#ddd";
+      box.style.border = "transparent";
+      setTimeout(() => {
+        box.style.border = "2px solid #fff";
+      }, 50);
       if (boxCount < 5) boxCount++;
       console.log(boxCount);
     }
@@ -31,12 +36,14 @@ document.addEventListener("keydown", (e) => {
         ) as HTMLElement;
       }
     }
+    box.style.border = "transparent";
+    setTimeout(() => {
+      box.style.border = "2px solid #fff";
+    }, 50);
     box.innerHTML = "";
   } else if (e.code === "Enter") {
     // Enter키 누르는 경우
-    boxCount < 5 || lastBox.textContent === ""
-      ? alert("5글자를입력하세요")
-      : checkAnswer();
+    boxCount < 5 || lastBox.textContent === "" ? alert() : checkAnswer();
   }
 });
 
@@ -51,7 +58,8 @@ function checkAnswer() {
     userAnswer.push(element.innerText);
   }
   if (userAnswer.join("") === answer) {
-    alert(`축하합니다!! ${containerCount}번 만의 성공입니다!!`);
+    alert();
+    // alert(`축하합니다!! ${containerCount}번 만의 성공입니다!!`);
   }
 
   userAnswer.forEach((word, index) => {
@@ -59,13 +67,13 @@ function checkAnswer() {
       `.box-container-${containerCount}>.box-${index + 1}`,
     ) as HTMLElement;
     if (word === answer[index]) {
-      box.style.backgroundColor = "green";
+      box.style.backgroundColor = "#15903e";
       box.style.color = "#fff";
     } else if (answer.includes(word)) {
-      box.style.backgroundColor = "gold";
+      box.style.backgroundColor = "#908815";
       box.style.color = "#fff";
     } else {
-      box.style.backgroundColor = "grey";
+      box.style.backgroundColor = "#901915";
       box.style.color = "#fff";
     }
   });
