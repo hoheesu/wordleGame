@@ -1,10 +1,13 @@
-import alert from "./alert";
+// import alert from "./alert";
 
 let answer = "truck".toUpperCase() as string;
 let boxCount = 1;
 let containerCount = 1;
+let pressEnter = false;
+let gameOver = false;
 
 document.addEventListener("keydown", (e) => {
+  e.preventDefault();
   let boxContainer = document.querySelector(
     `.box-container-${containerCount}`,
   ) as HTMLElement;
@@ -14,7 +17,7 @@ document.addEventListener("keydown", (e) => {
   let lastBox = document.querySelector(
     `.box-container-${containerCount}>.box-5`,
   ) as HTMLElement;
-
+  if (pressEnter) return;
   if (e.code >= "KeyA" && e.code <= "KeyZ") {
     //A-Z 키보드 누르는 경우
     if (box.textContent === "") {
@@ -43,7 +46,9 @@ document.addEventListener("keydown", (e) => {
     box.innerHTML = "";
   } else if (e.code === "Enter") {
     // Enter키 누르는 경우
-    boxCount < 5 || lastBox.textContent === "" ? alert() : checkAnswer();
+    boxCount < 5 || lastBox.textContent === ""
+      ? alert(gameOver)
+      : checkAnswer();
   }
 });
 
@@ -58,7 +63,8 @@ function checkAnswer() {
     userAnswer.push(element.innerText);
   }
   if (userAnswer.join("") === answer) {
-    alert();
+    gameOver = true;
+    alert(gameOver);
     // alert(`축하합니다!! ${containerCount}번 만의 성공입니다!!`);
   }
 
@@ -79,4 +85,36 @@ function checkAnswer() {
   });
   boxCount = 1;
   containerCount += 1;
+}
+
+export default function alert(isOVer: boolean) {
+  let backFilterEl = document.querySelector(".back-filter") as HTMLElement;
+  let modalEl = document.getElementById("modal") as HTMLElement;
+  let modalCloseEl = document.querySelector(".close-btn") as HTMLElement;
+  let modalAlertMessage = document.querySelector(
+    ".modal-container",
+  ) as HTMLElement;
+  backFilterEl.style.display = "block";
+  modalEl.style.display = "block";
+  pressEnter = true;
+  if (gameOver) {
+    modalAlertMessage.innerHTML = ` <div class="text-box">
+    <i class="fa-solid fa-champagne-glasses" style="color: #15903e"></i>
+    <p>
+      ${containerCount}번 만에 <br />
+      정답!!
+    </p>
+    <i class="fa-solid fa-champagne-glasses" style="color: #15903e"></i>
+  </div>
+  <div class="button-box">
+    <button>다시하기</button>
+    <button>기록보기</button>
+  </div>`;
+  }
+  modalCloseEl?.addEventListener("click", (e) => {
+    e.preventDefault();
+    backFilterEl.style.display = "none";
+    modalEl.style.display = "none";
+    pressEnter = false;
+  });
 }
