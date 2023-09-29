@@ -1,13 +1,15 @@
-// import alert from "./alert";
+import { getWord } from "./axios.ts";
 
-let answer = "truck".toUpperCase() as string;
+let answer = (await getWord()).toUpperCase() as any;
+
 let boxCount = 1;
 let containerCount = 1;
 let pressEnter = false;
 let gameOver = false;
 
-document.addEventListener("keydown", (e) => {
+document.addEventListener("keyup", (e) => {
   e.preventDefault();
+  console.log(e.code);
   let boxContainer = document.querySelector(
     `.box-container-${containerCount}`,
   ) as HTMLElement;
@@ -98,17 +100,29 @@ export default function alert(isOVer: boolean) {
   modalEl.style.display = "block";
   pressEnter = true;
   if (gameOver) {
-    modalAlertMessage.innerHTML = ` <div class="text-box">
-    <i class="fa-solid fa-champagne-glasses" style="color: #15903e"></i>
+    modalAlertMessage.innerHTML = `
+    <div class="text-box">
+    <i class="fa-solid fa-champagne-glasses" style="color: #908815"></i>
     <p>
       ${containerCount}번 만에 <br />
       정답!!
     </p>
-    <i class="fa-solid fa-champagne-glasses" style="color: #15903e"></i>
+    <i class="fa-solid fa-champagne-glasses" style="color: #908815"></i>
   </div>
   <div class="button-box">
     <button>다시하기</button>
     <button>기록보기</button>
+  </div>`;
+  } else {
+    modalAlertMessage.innerHTML = `
+    <div class="text-box">
+    <i class="fa-sharp fa-solid fa-circle-exclamation" style="color: #901915" ></i>
+    <p>
+      5글자를 입력해주세요 !!
+    </p>
+    <i class="fa-sharp fa-solid fa-circle-exclamation" style="color: #901915" ></i>
+  </div>
+  <div class="button-box">
   </div>`;
   }
   modalCloseEl?.addEventListener("click", (e) => {
