@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build-css": "sass src/styles/main.scss public/styles/main.css"
   },
   "devDependencies": {
     "jest": "^27.4.5",
