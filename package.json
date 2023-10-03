@@ -19,7 +19,7 @@
     "axios": "^1.5.1"
   },
   "description": "",
-  "main": "index.html",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hoheesu/wordleGame.git"
