@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite && parcel index.html",
+    "dev": "vite",
     "build": "tsc && vite build && parcel build index.html",
     "preview": "vite preview"
   },
