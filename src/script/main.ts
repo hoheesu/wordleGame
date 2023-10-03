@@ -10,9 +10,9 @@ let gameOver = false;
 document.addEventListener("keyup", (e) => {
   e.preventDefault();
   console.log(e.code);
-  // let boxContainer = document.querySelector(
-  //   `.box-container-${containerCount}`,
-  // ) as HTMLElement;
+  let boxContainer = document.querySelector(
+    `.box-container-${containerCount}`,
+  ) as HTMLElement;
   let box = document.querySelector(
     `.box-container-${containerCount}>.box-${boxCount}`,
   ) as HTMLElement;
