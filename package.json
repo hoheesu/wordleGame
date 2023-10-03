@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "node-sass": "^9.0.0",
     "parcel-bundler": "^1.12.5",
     "sass": "^1.68.0",
     "typescript": "^5.0.2",
