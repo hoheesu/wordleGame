@@ -1,6 +1,6 @@
 import topLevelAwait from "vite-plugin-top-level-await";
 
-export default defineConfig({
+export default {
   plugins: [
     topLevelAwait({
       // The export name of top-level await promise for each chunk module
@@ -12,4 +12,4 @@ export default defineConfig({
   build: {
     target: ["edge90", "chrome90", "firefox90", "safari15"],
   },
-});
+};
