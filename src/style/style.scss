@@ -1,10 +1,16 @@
 @import url("./reset.css");
+body {
+  background-color: #333;
+}
 h1 {
+  z-index: 3;
   font-size: 2rem;
   line-height: 4rem;
+  font-weight: bold;
   text-align: center;
-  background-color: #333;
-  margin-bottom: 3rem;
+  border-top: 3px solid #15903e;
+  border-bottom: 3px solid #15903e;
+  margin: 2rem 0 3rem;
   color: #fff;
 }
 .board-container {
@@ -19,10 +25,74 @@ h1 {
   .box {
     width: 50px;
     height: 50px;
-    border: 2px solid #333;
+    border: 2px solid #fff;
+    color: #fff;
     box-sizing: border-box;
     line-height: 46px;
     text-align: center;
     font-size: 2rem;
+    font-weight: bold;
+    transition: all 0.2s;
+  }
+}
+.back-filter {
+  position: fixed;
+  text-indent: -9999px;
+  top: 0;
+  z-index: 2;
+  background-color: #ffffff55;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+}
+#modal {
+  z-index: 3;
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 30%;
+
+  background-color: #fff;
+  .modal-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 3rem;
+    height: 100%;
+    box-sizing: border-box;
+    .text-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.8rem;
+      i {
+        font-size: 1.5rem;
+        color: #901515;
+      }
+      p {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+    }
+    .button-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .close-btn {
+    position: absolute;
+    right: 0rem;
+    width: 2rem;
+    height: 2rem;
+    background-color: #901515;
+    color: #fff;
+    cursor: pointer;
+    &:hover {
+      background-color: #e62a2a;
+    }
   }
 }
