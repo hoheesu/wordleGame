@@ -1,6 +1,16 @@
 import { getWord } from "./axios.ts";
 
-let answer = (await getWord()).toUpperCase() as any;
+async function answerWord() {
+  try {
+    let word = await getWord();
+    return word.toUpperCase() as any;
+    // 이후 작업
+  } catch (error) {
+    // 오류 처리
+    console.error(error);
+  }
+}
+// console.log(answer);
 
 let boxCount = 1;
 let containerCount = 1;
@@ -52,7 +62,8 @@ document.addEventListener("keyup", (e) => {
   }
 });
 
-function checkAnswer() {
+async function checkAnswer() {
+  let answer = await answerWord();
   // 정답확인 함수
   let boxes = document.querySelectorAll(
     `.box-container-${containerCount}>.box`,
