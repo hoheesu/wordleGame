@@ -1,0 +1,101 @@
+body {
+  background-color: #333;
+}
+
+h1 {
+  z-index: 3;
+  font-size: 2rem;
+  line-height: 4rem;
+  font-weight: bold;
+  text-align: center;
+  border-top: 3px solid #15903e;
+  border-bottom: 3px solid #15903e;
+  margin: 2rem 0 3rem;
+  color: #fff;
+}
+
+.board-container {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.box-container {
+  display: flex;
+  margin-bottom: 2rem;
+  gap: 0.5rem;
+}
+.box-container .box {
+  width: 50px;
+  height: 50px;
+  border: 2px solid #fff;
+  color: #fff;
+  box-sizing: border-box;
+  line-height: 46px;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.back-filter {
+  position: fixed;
+  text-indent: -9999px;
+  top: 0;
+  z-index: 2;
+  background-color: #ffffff55;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+}
+
+#modal {
+  z-index: 3;
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 30%;
+  background-color: #fff;
+}
+#modal .modal-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 3rem;
+  height: 100%;
+  box-sizing: border-box;
+}
+#modal .modal-container .text-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+}
+#modal .modal-container .text-box i {
+  font-size: 1.5rem;
+  color: #901515;
+}
+#modal .modal-container .text-box p {
+  text-align: center;
+  font-size: 1.5rem;
+}
+#modal .modal-container .button-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#modal .close-btn {
+  position: absolute;
+  right: 0rem;
+  width: 2rem;
+  height: 2rem;
+  background-color: #901515;
+  color: #fff;
+  cursor: pointer;
+}
+#modal .close-btn:hover {
+  background-color: #e62a2a;
+}
