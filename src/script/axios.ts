@@ -1,4 +1,5 @@
-import axios from "axios";
+// import axios from "axios";
+import axios from "/path/to/axios.js"; // 절대 경로 사용
 
 const BASE_URL = "https://random-word.ryanrk.com";
 export const getWord = async () => {
