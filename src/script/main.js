@@ -1,4 +1,4 @@
-import { getWord } from "./axios.ts";
+import { getWord } from "./fetch.js";
 
 // const answer = (await getWord()).toUpperCase() as any;
 let answer = "";
