@@ -1,4 +1,6 @@
-import { getWord } from "./axios.ts";
+import { getWord } from "./fetch.ts";
+
+// getWord();
 
 async function answerWord() {
   try {
