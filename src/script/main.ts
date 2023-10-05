@@ -1,7 +1,12 @@
 import { getWord } from "./axios.ts";
 
-let answer = (await getWord()).toUpperCase() as any;
+// const answer = (await getWord()).toUpperCase() as any;
+let answer = "";
 
+(async () => {
+  const word = await getWord();
+  answer = word.toUpperCase() as string;
+})();
 let boxCount = 1;
 let containerCount = 1;
 let pressEnter = false;
@@ -10,9 +15,6 @@ let gameOver = false;
 document.addEventListener("keyup", (e) => {
   e.preventDefault();
   console.log(e.code);
-  let boxContainer = document.querySelector(
-    `.box-container-${containerCount}`,
-  ) as HTMLElement;
   let box = document.querySelector(
     `.box-container-${containerCount}>.box-${boxCount}`,
   ) as HTMLElement;
@@ -48,9 +50,7 @@ document.addEventListener("keyup", (e) => {
     box.innerHTML = "";
   } else if (e.code === "Enter") {
     // Enter키 누르는 경우
-    boxCount < 5 || lastBox.textContent === ""
-      ? alert(gameOver)
-      : checkAnswer();
+    boxCount < 5 || lastBox.textContent === "" ? alert() : checkAnswer();
   }
 });
 
@@ -66,7 +66,7 @@ function checkAnswer() {
   }
   if (userAnswer.join("") === answer) {
     gameOver = true;
-    alert(gameOver);
+    alert();
     // alert(`축하합니다!! ${containerCount}번 만의 성공입니다!!`);
   }
 
@@ -89,7 +89,7 @@ function checkAnswer() {
   containerCount += 1;
 }
 
-export default function alert(isOVer: boolean) {
+export default function alert() {
   let backFilterEl = document.querySelector(".back-filter") as HTMLElement;
   let modalEl = document.getElementById("modal") as HTMLElement;
   let modalCloseEl = document.querySelector(".close-btn") as HTMLElement;
