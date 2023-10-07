@@ -1,6 +1,5 @@
 import { getWord } from "./fetch.ts";
 
-// const answer = (await getWord()).toUpperCase() as any;
 let answer = "";
 
 (async () => {

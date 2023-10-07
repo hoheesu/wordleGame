@@ -7,25 +7,40 @@ let answer = "";
   const word = await getWord();
   answer = word.toUpperCase();
 })();
+
 let boxCount = 1;
 let containerCount = 1;
 let pressEnter = false;
 let gameOver = false;
 
-document.addEventListener("keyup", (e) => {
-  e.preventDefault();
-  console.log(e.code);
+const Keyboard = window.SimpleKeyboard.default;
+const myKeyboard = new Keyboard({
+  onKeyPress: (button) => onKeyPress(button),
+});
+
+function onKeyPress(button) {
+  keyPressFnc(button, true);
+}
+
+document.addEventListener("keyup", (element) => {
+  keyPressFnc(element, false);
+});
+
+function keyPressFnc(el, isMyKey) {
   let box = document.querySelector(
     `.box-container-${containerCount}>.box-${boxCount}`,
   );
   let lastBox = document.querySelector(
     `.box-container-${containerCount}>.box-5`,
   );
+  let keyboard;
+
+  isMyKey ? (keyboard = el) : (keyboard = el.key);
   if (pressEnter) return;
-  if (e.code >= "KeyA" && e.code <= "KeyZ") {
+  if (keyboard >= "a" && keyboard <= "z") {
     //A-Z 키보드 누르는 경우
     if (box.textContent === "") {
-      box.textContent = `${e.code[3]}`;
+      box.textContent = `${keyboard.toUpperCase()}`;
       box.style.border = "transparent";
       setTimeout(() => {
         box.style.border = "2px solid #fff";
@@ -33,7 +48,7 @@ document.addEventListener("keyup", (e) => {
       if (boxCount < 5) boxCount++;
       console.log(boxCount);
     }
-  } else if (e.code === "Backspace") {
+  } else if (keyboard === "Backspace" || keyboard === "{bksp}") {
     //backspace누르는 경우
     if (box.innerHTML === "") {
       if (boxCount > 1) {
@@ -48,11 +63,11 @@ document.addEventListener("keyup", (e) => {
       box.style.border = "2px solid #fff";
     }, 50);
     box.innerHTML = "";
-  } else if (e.code === "Enter") {
+  } else if (keyboard === "Enter" || keyboard === "{enter}") {
     // Enter키 누르는 경우
     boxCount < 5 || lastBox.textContent === "" ? alert() : checkAnswer();
   }
-});
+}
 
 function checkAnswer() {
   // 정답확인 함수

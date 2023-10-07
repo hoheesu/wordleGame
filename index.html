@@ -10,13 +10,15 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <title>WordleGame - YoonJunsu</title>
-    <!-- <link rel="stylesheet" href="./src/style/style.scss" /> -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/css/index.css"
+    />
     <link rel="stylesheet" href="./src/style/reset.css" />
     <link rel="stylesheet" href="./src/style/main.css" />
+    <title>WordleGame - YoonJunsu</title>
   </head>
   <body>
-    <script type="module" src="/src/script/index.ts"></script>
     <h1>WordleGame</h1>
     <div class="back-filter" id="back-filter">배경필터</div>
     <article class="board-container">
@@ -60,5 +62,9 @@
       <button class="close-btn">x</button>
       <div class="modal-container"></div>
     </section>
+    <div class="simple-keyboard"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/index.js"></script>
+    <script type="module" src="/src/script/index.js"></script>
   </body>
 </html>
