@@ -1,54 +1,75 @@
 import { getWord } from "./fetch.js";
 
-// const answer = (await getWord()).toUpperCase() as any;
-let answer = "";
-
 (async () => {
   const word = await getWord();
   answer = word.toUpperCase();
 })();
 
+let answer = "";
 let boxCount = 1;
 let containerCount = 1;
 let pressEnter = false;
 let gameOver = false;
+let correctAnswer = false;
+
+const backFilterEl = document.querySelector(".back-filter");
+const modalEl = document.getElementById("modal");
+const modalCloseEl = document.querySelector(".close-btn");
+const modalAlertMessage = document.querySelector(".modal-container");
 
 const Keyboard = window.SimpleKeyboard.default;
 const myKeyboard = new Keyboard({
   onKeyPress: (button) => onKeyPress(button),
+  mergeDisplay: true,
+  layoutName: "default",
+  layout: {
+    default: [
+      "q w e r t y u i o p",
+      "a s d f g h j k l",
+      "z x c v b n m {Backspace}",
+      "{space} {Enter}",
+    ],
+  },
+  display: {
+    "{Enter}": "⏎",
+    "{Backspace}": "⌫",
+  },
+});
+
+document.addEventListener("keyup", (e) => {
+  e.preventDefault();
+  keyPressFnc(e, false);
+  console.log(containerCount);
 });
 
 function onKeyPress(button) {
   keyPressFnc(button, true);
 }
 
-document.addEventListener("keyup", (element) => {
-  keyPressFnc(element, false);
-});
-
 function keyPressFnc(el, isMyKey) {
+  //키보드 혹은 버튼을 눌렀을 때 실행될 함수
   let box = document.querySelector(
     `.box-container-${containerCount}>.box-${boxCount}`,
   );
-  let lastBox = document.querySelector(
+  const lastBox = document.querySelector(
     `.box-container-${containerCount}>.box-5`,
   );
   let keyboard;
-
   isMyKey ? (keyboard = el) : (keyboard = el.key);
+  // 키보드로 누른 것인지 버튼으로 누른것인지에 따라 변수
   if (pressEnter) return;
   if (keyboard >= "a" && keyboard <= "z") {
     //A-Z 키보드 누르는 경우
     if (box.textContent === "") {
+      // 박스가 비어있는 경우
       box.textContent = `${keyboard.toUpperCase()}`;
       box.style.border = "transparent";
       setTimeout(() => {
         box.style.border = "2px solid #fff";
       }, 50);
       if (boxCount < 5) boxCount++;
-      console.log(boxCount);
     }
-  } else if (keyboard === "Backspace" || keyboard === "{bksp}") {
+  } else if (keyboard === "Backspace" || keyboard === "{Backspace}") {
     //backspace누르는 경우
     if (box.innerHTML === "") {
       if (boxCount > 1) {
@@ -63,9 +84,13 @@ function keyPressFnc(el, isMyKey) {
       box.style.border = "2px solid #fff";
     }, 50);
     box.innerHTML = "";
-  } else if (keyboard === "Enter" || keyboard === "{enter}") {
+  } else if (keyboard === "Enter" || keyboard === "{Enter}") {
     // Enter키 누르는 경우
-    boxCount < 5 || lastBox.textContent === "" ? alert() : checkAnswer();
+    if (containerCount === 6) {
+      gameOver = true;
+      alert();
+    } else if (boxCount < 5 || lastBox.textContent === "") alert();
+    else checkAnswer();
   }
 }
 
@@ -80,9 +105,9 @@ function checkAnswer() {
     userAnswer.push(element.innerText);
   }
   if (userAnswer.join("") === answer) {
+    correctAnswer = true;
     gameOver = true;
     alert();
-    // alert(`축하합니다!! ${containerCount}번 만의 성공입니다!!`);
   }
 
   userAnswer.forEach((word, index) => {
@@ -104,29 +129,11 @@ function checkAnswer() {
   containerCount += 1;
 }
 
-export default function alert() {
-  let backFilterEl = document.querySelector(".back-filter");
-  let modalEl = document.getElementById("modal");
-  let modalCloseEl = document.querySelector(".close-btn");
-  let modalAlertMessage = document.querySelector(".modal-container");
+function alert() {
   backFilterEl.style.display = "block";
   modalEl.style.display = "block";
   pressEnter = true;
-  if (gameOver) {
-    modalAlertMessage.innerHTML = `
-    <div class="text-box">
-    <i class="fa-solid fa-champagne-glasses" style="color: #908815"></i>
-    <p>
-      ${containerCount}번 만에 <br />
-      정답!!
-    </p>
-    <i class="fa-solid fa-champagne-glasses" style="color: #908815"></i>
-  </div>
-  <div class="button-box">
-    <button>다시하기</button>
-    <button>기록보기</button>
-  </div>`;
-  } else {
+  if (!gameOver) {
     modalAlertMessage.innerHTML = `
     <div class="text-box">
     <i class="fa-sharp fa-solid fa-circle-exclamation" style="color: #901915" ></i>
@@ -134,9 +141,28 @@ export default function alert() {
       5글자를 입력해주세요 !!
     </p>
     <i class="fa-sharp fa-solid fa-circle-exclamation" style="color: #901915" ></i>
-  </div>
-  <div class="button-box">
-  </div>`;
+    </div>`;
+  } else if (gameOver && correctAnswer) {
+    modalAlertMessage.innerHTML = `
+      <div class="text-box">
+      <i class="fa-solid fa-champagne-glasses" style="color: #908815"></i>
+      <p>
+        ${containerCount}번 만에 <br />
+        정답!!
+      </p>
+      <i class="fa-solid fa-champagne-glasses" style="color: #908815"></i>
+      <button id="restart">다시하기</button>
+      </div> `;
+  } else if (gameOver && !correctAnswer) {
+    modalAlertMessage.innerHTML = `
+      <div class="text-box">
+      <i class="fa-solid fa-champagne-glasses" style="color: #908815"></i>
+      <p>
+        아쉽습니다<br/> 정답은 ${answer.toUpperCase()} 였습니다.
+      </p>
+      <i class="fa-solid fa-champagne-glasses" style="color: #908815"></i>
+      <button id="restart">다시하기</button>
+      </div>`;
   }
   modalCloseEl?.addEventListener("click", (e) => {
     e.preventDefault();
@@ -145,3 +171,23 @@ export default function alert() {
     pressEnter = false;
   });
 }
+document.getElementById("restart").addEventListener("click", (e) => {
+  e.preventDefault();
+  answer = "";
+  boxCount = 1;
+  containerCount = 1;
+  pressEnter = false;
+  gameOver = false;
+  correctAnswer = false;
+  backFilterEl.style.display = "none";
+  modalEl.style.display = "none";
+  let boxes = document.querySelectorAll(".box");
+  boxes.forEach((el) => {
+    el.innerText = "";
+  });
+  (async () => {
+    const word = await getWord();
+    answer = word.toUpperCase();
+  })();
+  // keyPressFnc();
+});
