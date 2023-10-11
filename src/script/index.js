@@ -86,10 +86,7 @@ function keyPressFnc(el, isMyKey) {
     box.innerHTML = "";
   } else if (keyboard === "Enter" || keyboard === "{Enter}") {
     // Enter키 누르는 경우
-    if (containerCount === 6) {
-      gameOver = true;
-      alert();
-    } else if (boxCount < 5 || lastBox.textContent === "") alert();
+    if (boxCount < 5 || lastBox.textContent === "") alert();
     else checkAnswer();
   }
 }
@@ -107,6 +104,10 @@ function checkAnswer() {
   if (userAnswer.join("") === answer) {
     correctAnswer = true;
     gameOver = true;
+    alert();
+  } else if (containerCount === 6) {
+    gameOver = true;
+    // correctAnswer = false;
     alert();
   }
 
@@ -170,24 +171,24 @@ function alert() {
     modalEl.style.display = "none";
     pressEnter = false;
   });
-}
-document.getElementById("restart").addEventListener("click", (e) => {
-  e.preventDefault();
-  answer = "";
-  boxCount = 1;
-  containerCount = 1;
-  pressEnter = false;
-  gameOver = false;
-  correctAnswer = false;
-  backFilterEl.style.display = "none";
-  modalEl.style.display = "none";
-  let boxes = document.querySelectorAll(".box");
-  boxes.forEach((el) => {
-    el.innerText = "";
+  document.getElementById("restart").addEventListener("click", (e) => {
+    e.preventDefault();
+    answer = "";
+    boxCount = 1;
+    containerCount = 1;
+    pressEnter = false;
+    gameOver = false;
+    correctAnswer = false;
+    backFilterEl.style.display = "none";
+    modalEl.style.display = "none";
+    let boxes = document.querySelectorAll(".box");
+    boxes.forEach((box) => {
+      box.innerText = "";
+      box.style.backgroundColor = "#333";
+    });
+    (async () => {
+      const word = await getWord();
+      answer = word.toUpperCase();
+    })();
   });
-  (async () => {
-    const word = await getWord();
-    answer = word.toUpperCase();
-  })();
-  // keyPressFnc();
-});
+}
