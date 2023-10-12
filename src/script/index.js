@@ -1,5 +1,7 @@
 import { getWord } from "./fetch.js";
 
+// 3. answer값 넘어 올때 A-Z가 아닌 값이 넘어 온다면 값 반환
+
 (async () => {
   const word = await getWord();
   answer = word.toUpperCase();
@@ -11,6 +13,7 @@ let containerCount = 1;
 let pressEnter = false;
 let gameOver = false;
 let correctAnswer = false;
+let hintCont = 1;
 
 const backFilterEl = document.querySelector(".back-filter");
 const modalEl = document.getElementById("modal");
