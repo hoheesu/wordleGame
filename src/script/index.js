@@ -2,9 +2,12 @@ import { getWord } from "./fetch.js";
 
 // 3. answer값 넘어 올때 A-Z가 아닌 값이 넘어 온다면 값 반환
 
-(async () => {
+(async function answerFnc() {
   const word = await getWord();
   answer = word.toUpperCase();
+  if (!/^[A-Z]+$/.test(answer)) {
+    answerFnc();
+  }
 })();
 
 let answer = "";
