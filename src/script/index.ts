@@ -1,7 +1,11 @@
-import { getWord } from "./axios.ts";
+import { getWord } from "./fetch.ts";
 
-let answer = (await getWord()).toUpperCase() as any;
+let answer = "";
 
+(async () => {
+  const word = await getWord();
+  answer = word.toUpperCase() as string;
+})();
 let boxCount = 1;
 let containerCount = 1;
 let pressEnter = false;
@@ -10,9 +14,6 @@ let gameOver = false;
 document.addEventListener("keyup", (e) => {
   e.preventDefault();
   console.log(e.code);
-  // let boxContainer = document.querySelector(
-  //   `.box-container-${containerCount}`,
-  // ) as HTMLElement;
   let box = document.querySelector(
     `.box-container-${containerCount}>.box-${boxCount}`,
   ) as HTMLElement;

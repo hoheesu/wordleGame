@@ -1,6 +1,7 @@
-// export default {
-//   root: "/",
-//   build: {
-//     outDir: "../public",
-//   },
-// };
+export default {
+  server: {
+    mimeTypes: {
+      "text/javascript": ["ts"],
+    },
+  },
+};
