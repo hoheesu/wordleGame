@@ -155,8 +155,8 @@ function alert() {
         정답!!
       </p>
       <i class="fa-solid fa-champagne-glasses" style="color: #908815"></i>
-      <button id="restart">다시하기</button>
-      </div> `;
+      </div>
+      <button id="restart">다시하기</button>`;
   } else if (gameOver && !correctAnswer) {
     modalAlertMessage.innerHTML = `
       <div class="text-box">
@@ -165,8 +165,8 @@ function alert() {
         아쉽습니다<br/> 정답은 ${answer.toUpperCase()} 였습니다.
       </p>
       <i class="fa-solid fa-champagne-glasses" style="color: #908815"></i>
-      <button id="restart">다시하기</button>
-      </div>`;
+      </div>
+      <button id="restart">다시하기</button>`;
   }
   modalCloseEl?.addEventListener("click", (e) => {
     e.preventDefault();
@@ -174,24 +174,26 @@ function alert() {
     modalEl.style.display = "none";
     pressEnter = false;
   });
-  document.getElementById("restart").addEventListener("click", (e) => {
-    e.preventDefault();
-    answer = "";
-    boxCount = 1;
-    containerCount = 1;
-    pressEnter = false;
-    gameOver = false;
-    correctAnswer = false;
-    backFilterEl.style.display = "none";
-    modalEl.style.display = "none";
-    let boxes = document.querySelectorAll(".box");
-    boxes.forEach((box) => {
-      box.innerText = "";
-      box.style.backgroundColor = "#333";
+  if (gameOver) {
+    document.getElementById("restart").addEventListener("click", (e) => {
+      e.preventDefault();
+      answer = "";
+      boxCount = 1;
+      containerCount = 1;
+      pressEnter = false;
+      gameOver = false;
+      correctAnswer = false;
+      backFilterEl.style.display = "none";
+      modalEl.style.display = "none";
+      let boxes = document.querySelectorAll(".box");
+      boxes.forEach((box) => {
+        box.innerText = "";
+        box.style.backgroundColor = "#333";
+      });
+      (async () => {
+        const word = await getWord();
+        answer = word.toUpperCase();
+      })();
     });
-    (async () => {
-      const word = await getWord();
-      answer = word.toUpperCase();
-    })();
-  });
+  }
 }
