@@ -1,22 +1,19 @@
 import { getWord } from "./fetch.js";
 
-// 3. answer값 넘어 올때 A-Z가 아닌 값이 넘어 온다면 값 반환
-
-(async function answerFnc() {
-  const word = await getWord();
-  answer = word.toUpperCase();
-  if (!/^[A-Z]+$/.test(answer)) {
-    answerFnc();
-  }
-})();
-
 let answer = "";
 let boxCount = 1;
 let containerCount = 1;
 let pressEnter = false;
 let gameOver = false;
 let correctAnswer = false;
-let hintCont = 1;
+
+(async function answerFnc() {
+  let word = await getWord();
+  answer = word.toUpperCase();
+  if (!/^[A-Z]+$/.test(answer)) {
+    answerFnc();
+  }
+})();
 
 const backFilterEl = document.querySelector(".back-filter");
 const modalEl = document.getElementById("modal");
